@@ -4,6 +4,9 @@
 #UE files
 Binaries/
 Intermediate/
+Build/
+Saved/
+.vs/
 
 # User-specific files
 *.suo
