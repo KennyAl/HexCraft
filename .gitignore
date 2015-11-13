@@ -4,9 +4,14 @@
 #UE files
 Binaries/
 Intermediate/
+<<<<<<< HEAD
 Build/
 Saved/
 .vs/
+=======
+*.sln
+
+>>>>>>> 9e08fa8eca2b152faa018e7c3ecaf1a76b6e9d5b
 
 # User-specific files
 *.suo
