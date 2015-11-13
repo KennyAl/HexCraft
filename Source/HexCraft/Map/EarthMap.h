@@ -2,9 +2,19 @@
 
 #pragma once
 
+#include "FMapGenerator.h"
 #include "ProceduralMeshComponent.h"
 #include "GameFramework/Actor.h"
 #include "EarthMap.generated.h"
+
+USTRUCT()
+struct FPlayerEntry
+{
+	GENERATED_BODY()
+
+	ACharacter* CharRef;
+	FVector Location;
+};
 
 UCLASS()
 class HEXCRAFT_API AEarthMap : public AActor
@@ -24,9 +34,24 @@ public:
 	/** Loads a chunk from savegame or generates a new one */
 	void LoadChunk();
 
+	virtual void EndPlay(EEndPlayReason::Type EndPlayReason) override;
+
+	/** Creates a new entry in the active players register and returns its id */
+	int32 RegisterActivePlayer(ACharacter& NewPlayer);
+
+	/** Returns a reference to the register entry */
+	FPlayerEntry& GetPlayerByID(int32 ID);
+
 private:
 
 	/** Test chunk mesh */
-	UProceduralMeshComponent* ProcMeshComp;
+	//UProceduralMeshComponent* ProcMeshComp;
+	TArray<UProceduralMeshComponent*> Meshes;
+
+	FMapGenerator MapGen;
 	
+	const int32 ViewDistance = 20;
+
+	/** The player register */
+	TArray<FPlayerEntry*> PlayerRegister;
 };

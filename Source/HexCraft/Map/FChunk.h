@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "FSettings.h"
 #include "FChunkSection.h"
 
 /**
@@ -33,4 +34,6 @@ private:
 
 	/** Array of all sections that are belonging to this chunk (0 is bottom, n is top)*/
 	TArray<FChunkSection*> Sections;
+
+
 };

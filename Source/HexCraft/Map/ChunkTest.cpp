@@ -3,6 +3,7 @@
 #include "HexCraft.h"
 #include "ChunkTest.h"
 #include "FPerlinNoiseGenerator2D.h"
+#include "FMapGenerator.h"
 
 
 // Sets default values
@@ -23,19 +24,21 @@ AChunkTest::AChunkTest(const FObjectInitializer& ObjectInitializer)
 void AChunkTest::BeginPlay()
 {
 	Super::BeginPlay();
-	FRandomStream Random;
-	Random.Initialize(1);
+	//FRandomStream Random;
+	//Random.Initialize(1);
+	//
+	//HexNoise::FPerlinNoiseGenerator2D Noise;
+	//
+	//Noise.NoiseSettings.InitialAmplitude = 30;
+	//Noise.NoiseSettings.InterpMethod = EInterpMethod::Cubic;
+	//Noise.NoiseSettings.bSmooth = false;
+	//Noise.NoiseSettings.Seed = 1;
+	//Noise.NoiseSettings.Oktaves = 1;
+	//Noise.NoiseSettings.InitialFrequency = 0.05;
+	//FTransform trans(FVector(600, 600, 0));
 	
-	HexNoise::FPerlinNoiseGenerator2D Noise;
-	
-	Noise.NoiseSettings.InitialAmplitude = 30;
-	Noise.NoiseSettings.InterpMethod = EInterpMethod::Cubic;
-	Noise.NoiseSettings.bSmooth = false;
-	Noise.NoiseSettings.Seed = 1;
-	Noise.NoiseSettings.Oktaves = 1;
-	Noise.NoiseSettings.InitialFrequency = 0.05;
-	FTransform trans(FVector(600, 600, 0));
-	
+	//FMapGenerator Gen;
+	//Gen.Generate(TestChunk);
 	//Loop through every block in this section and create a mesh on all sides that are visible
 	//for (int32 Z = 0; Z < 128; Z++)
 	//{
@@ -59,10 +62,10 @@ void AChunkTest::BeginPlay()
 	//		}
 	//	}
 	//}
-	for (int32 X = 0; X < 16; X++)
-		for (int32 Y = 0; Y < 16; Y++)
-			for (int32 Z = 0; Z < FMath::Abs(FMath::RoundToInt(Noise.GetNoise(X, Y))); Z++)
-				TestChunk.SetBlockIDAt(X, Y, Z, 1);
+	//for (int32 X = 0; X < 16; X++)
+	//	for (int32 Y = 0; Y < 16; Y++)
+	//		for (int32 Z = 0; Z < FMath::Abs(FMath::RoundToInt(Noise.GetNoise(X, Y))); Z++)
+	//			TestChunk.SetBlockIDAt(X, Y, Z, 1);
 	
 	//UE_LOG(LogTemp, Warning, TEXT("Id: %d"), static_cast<int32>(TestChunk.GetBlockIDAt(0, 2, 0)));
 
@@ -75,7 +78,7 @@ void AChunkTest::BeginPlay()
 	TArray<FProcMeshTangent> Tangents;
 	
 	ProcMeshComp->CreateMeshSection
-		(0, MeshData->Vertices, MeshData->Triangles, MeshData->Normals, MeshData->UVs, VertexColors, Tangents, true);
+		(0, MeshData->Vertices, MeshData->Triangles, MeshData->Normals, MeshData->UVs, VertexColors, Tangents, false);
 }
 
 // Called every frame

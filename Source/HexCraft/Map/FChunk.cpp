@@ -5,7 +5,7 @@
 
 FChunk::FChunk()
 {
-	for (int32 NumSections = 0; NumSections < 8; NumSections++)
+	for (int32 NumSections = 0; NumSections < FSettings::NumChunkSections; NumSections++)
 		Sections.Add(new FChunkSection);
 }
 
@@ -28,12 +28,12 @@ uint32 FChunk::GetNumSections()
 
 uint8 FChunk::GetBlockIDAt(uint8 X, uint8 Y, uint8 Z)
 {
-	if (Z < 128)
+	if (Z < FSettings::ChunkSizeZ)
 	{
 		// Find out which section contains the requested block
-		uint32 Section = FMath::FloorToInt(Z / 16.0f);
+		uint32 Section = FMath::FloorToInt(Z / (float)FSettings::ChunkSectionHeight);
 
-		return GetSection(Section)->GetBlockIDAt(X, Y, Z % 16);
+		return GetSection(Section)->GetBlockIDAt(X, Y, Z % FSettings::ChunkSectionHeight);
 	}
 	else
 		return GetSection(0)->GetBlockIDAt(0, 0, 0);
@@ -41,11 +41,11 @@ uint8 FChunk::GetBlockIDAt(uint8 X, uint8 Y, uint8 Z)
 
 void FChunk::SetBlockIDAt(uint8 X, uint8 Y, uint8 Z, uint16 ID)
 {
-	if (Z < 128)
+	if (Z < FSettings::ChunkSizeZ)
 	{
 		// Find out which section contains the requested block
-		uint32 Section = FMath::FloorToInt(Z / 16.0f);
+		uint32 Section = FMath::FloorToInt(Z / (float)FSettings::ChunkSectionHeight);
 
-		GetSection(Section)->SetBlockIDAt(X, Y, Z % 16, ID);
+		GetSection(Section)->SetBlockIDAt(X, Y, Z % FSettings::ChunkSectionHeight, ID);
 	}
 }

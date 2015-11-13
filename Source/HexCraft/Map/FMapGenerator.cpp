@@ -2,7 +2,6 @@
 
 #include "HexCraft.h"
 #include "FMapGenerator.h"
-#include "FPerlinNoiseGenerator2D.h"
 
 FMapGenerator::FMapGenerator()
 {
@@ -19,10 +18,17 @@ FMapGenerator::~FMapGenerator()
 {
 }
 
-void FMapGenerator::Generate(FChunk& Chunk)
+FChunk& FMapGenerator::Generate(int32 _X, int32 _Y)
 {
+	// Create a new chunk
+	FChunk* ChunkPtr = new FChunk();
+	check(ChunkPtr != nullptr);
+	FChunk& Chunk = *ChunkPtr;
+
 	for (int32 X = 0; X < 16; X++)
 		for (int32 Y = 0; Y < 16; Y++)
-			for (int32 Z = 0; Z < FMath::Abs(FMath::RoundToInt(Noise.GetNoise(X, Y))); Z++)
+			for (int32 Z = 0; Z < FMath::Abs(FMath::RoundToInt(Noise.GetNoise(_X * 16 + X, _Y * 16 + Y))); Z++)
 				Chunk.SetBlockIDAt(X, Y, Z, 1);
+	
+	return Chunk;
 }

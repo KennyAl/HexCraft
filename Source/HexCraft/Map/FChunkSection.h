@@ -70,5 +70,5 @@ private:
 	/** Byte-size value to hold the states of the flags above */
 	uint8 Flags;
 
-	TStaticArray<TStaticArray<TStaticArray<uint16, 16>, 16>, 16> Block;
+	//TStaticArray<TStaticArray<TStaticArray<uint16, 16>, 16>, 16> Block;
 };

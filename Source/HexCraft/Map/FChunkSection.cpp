@@ -2,16 +2,17 @@
 
 #include "HexCraft.h"
 #include "FChunkSection.h"
+#include "FSettings.h"
 
 FChunkSection::FChunkSection()
 {
 	SetIsCleared(1);
-	for (int32 X = 0; X < 16; X++)
-		for (int32 Y = 0; Y < 16; Y++)
-			for (int32 Z = 0; Z < 16; Z++)
-				Block[X][Y][Z] = 0;
+	/*for (int32 X = 0; X < FSettings::ChunkSizeX; X++)
+		for (int32 Y = 0; Y < FSettings::ChunkSizeX; Y++)
+			for (int32 Z = 0; Z < FSettings::ChunkSectionHeight; Z++)
+				Block[X][Y][Z] = 0;*/
 
-	//InitializeSection();
+	InitializeSection();
 }
 
 FChunkSection::~FChunkSection()
@@ -26,7 +27,7 @@ const uint16 FChunkSection::GetBlockIDAt(uint8 X, uint8 Y, uint8 Z)
 	//	return 0;
 
 	if (X < 16 && Y < 16 && Z < 16)
-		return Block[X][Y][Z];
+		return Blocks[X][Y][Z];
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("FChunkSection::GetBlockIdAt() : Out of bounds !"));
@@ -42,7 +43,7 @@ const uint16 FChunkSection::GetBlockIDAt(uint8 X, uint8 Y, uint8 Z)
 void FChunkSection::SetBlockIDAt(uint8 X, uint8 Y, uint8 Z, uint16 ID)
 {
 	if (X < 16 && Y < 16 && Z < 16)
-		Block[X][Y][Z] = ID;
+		Blocks[X][Y][Z] = ID;
 	else
 		UE_LOG(LogTemp, Warning, TEXT("FChunkSection::SetBlockIdAt() : Out of bounds !"));
 		//Blocks[X][Y][Z] = ID;
