@@ -3,10 +3,13 @@
 #include "HexCraft.h"
 #include "FChunk.h"
 
-FChunk::FChunk()
+FChunk::FChunk(int32 X, int32 Y)
 {
 	for (int32 NumSections = 0; NumSections < FSettings::NumChunkSections; NumSections++)
 		Sections.Add(new FChunkSection);
+
+	XCoord = X;
+	YCoord = Y;
 }
 
 FChunk::~FChunk()
