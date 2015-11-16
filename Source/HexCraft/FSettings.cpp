@@ -3,9 +3,14 @@
 #include "HexCraft.h"
 #include "FSettings.h"
 
+FSettings::FSettings(FString Path)
+{
+	DefaultSettings();
+}
+
 void FSettings::DefaultSettings()
 {
-	// Chunk settings
+	// Chun	
 	ChunkSizeX = 16;
 	ChunkSizeY = 16;
 	ChunkSizeZ = 256;
