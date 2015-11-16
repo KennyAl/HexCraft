@@ -64,11 +64,9 @@ public:
 
 private:
 
-	/** 3 dimensional array containing all blocks */
-	uint16*** Blocks;
+	/** Array containing all blocks */
+	uint16* Blocks;
 
 	/** Byte-size value to hold the states of the flags above */
 	uint8 Flags;
-
-	//TStaticArray<TStaticArray<TStaticArray<uint16, 16>, 16>, 16> Block;
 };

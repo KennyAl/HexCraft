@@ -7,10 +7,6 @@
 FChunkSection::FChunkSection()
 {
 	SetIsCleared(1);
-	/*for (int32 X = 0; X < FSettings::ChunkSizeX; X++)
-		for (int32 Y = 0; Y < FSettings::ChunkSizeX; Y++)
-			for (int32 Z = 0; Z < FSettings::ChunkSectionHeight; Z++)
-				Block[X][Y][Z] = 0;*/
 
 	InitializeSection();
 }
@@ -27,26 +23,22 @@ const uint16 FChunkSection::GetBlockIDAt(uint8 X, uint8 Y, uint8 Z)
 	//	return 0;
 
 	if (X < 16 && Y < 16 && Z < 16)
-		return Blocks[X][Y][Z];
+		return Blocks[X * 16 * 3 + Y * 3 + Z];
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("FChunkSection::GetBlockIdAt() : Out of bounds !"));
 		return 0;
 	}
-		
-	//	return Blocks[X][Y][Z];
-	//else
-	//	return Blocks[0][0][0];
 	
 }
 
 void FChunkSection::SetBlockIDAt(uint8 X, uint8 Y, uint8 Z, uint16 ID)
 {
 	if (X < 16 && Y < 16 && Z < 16)
-		Blocks[X][Y][Z] = ID;
+		Blocks[X * 16 * 3 + Y * 3 + Z] = ID;
+
 	else
 		UE_LOG(LogTemp, Warning, TEXT("FChunkSection::SetBlockIdAt() : Out of bounds !"));
-		//Blocks[X][Y][Z] = ID;
 }
 
 void FChunkSection::InitializeSection()
@@ -55,20 +47,15 @@ void FChunkSection::InitializeSection()
 	if (GetIsCleared() == 0)
 		return;
 
-	// Dynamically allocate a 3dim array to store all the block IDs of this section
+	// Dynamically allocate an array to store all the block IDs of this section
 	// THIS NEEDS TO BE MANUALLY DELETED WITHIN THE DESTRUCTOR !!!
-	Blocks = new uint16**[16];
+	Blocks = new uint16[16 * 16 * 16];
 
 	for (int8 X = 0; X < 16; X++)
-	{
-		Blocks[X] = new uint16*[16];
 		for (int8 Y = 0; Y < 16; Y++)
-		{
-			Blocks[X][Y] = new uint16[16];
 			for (int8 Z = 0; Z < 16; Z++)
-				Blocks[X][Y][Z] = 0;
-		}
-	}
+				Blocks[X * 16 * 3 + Y * 3 + Z] = 0;
+
 
 	// Update the corresponding flag
 	SetIsCleared(0);
@@ -79,14 +66,6 @@ void FChunkSection::ClearSection()
 	// Do nothing if Blocks is already null
 	if (GetIsCleared() == 1)
 		return;
-
-	for (uint8 X = 0; X < 16; X++)
-	{
-		for (uint8 Y = 0; Y < 16; Y++)
-			delete[] Blocks[X][Y];
-
-		delete[] Blocks[X];
-	}
 
 	delete[] Blocks;
 
