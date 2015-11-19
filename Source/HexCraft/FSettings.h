@@ -8,10 +8,13 @@
 class HEXCRAFT_API FSettings
 {
 public:
-	/** Constructs a settings obFject from a .set file at the given path.
+	/* Constructor **/
+	FSettings();
+	
+	/** Constructs a settings object from a .set file at the given path.
 	* When the path is not valid or empty, the fallback routine DefaultSettings will be called
 	*/
-	FSettings(FString Path);
+	void LoadSettings();
 
 	// Chunk settings
 	int32 ChunkSizeX;
@@ -21,6 +24,12 @@ public:
 	int32 ChunkSectionHeight;
 	float BlockSize;
 
-
+	/** Sets all settings to their hardcoded default values */
 	void DefaultSettings();
+
+private:
+
+	/** Whether the settings were loaded correctly */
+	bool Loaded;
+
 };
