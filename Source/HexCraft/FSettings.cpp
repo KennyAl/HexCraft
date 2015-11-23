@@ -11,10 +11,11 @@ FSettings::FSettings()
 
 void FSettings::LoadSettings()
 {
-	check(GConfig);
+	/*check(GConfig);
 
 	GConfig->LoadFile(TEXT("Test"));
-	GConfig->GetInt(TEXT("Sec"), TEXT("ChunkSizeX"), ChunkSizeX, FString("Test"));
+	GConfig->GetInt(TEXT("Sec"), TEXT("ChunkSizeX"), ChunkSizeX, FString("Test"));*/
+	DefaultSettings();
 }
 
 void FSettings::DefaultSettings()
@@ -24,6 +25,5 @@ void FSettings::DefaultSettings()
 	ChunkSizeY = 16;
 	ChunkSizeZ = 256;
 	NumChunkSections = 8;
-	ChunkSectionHeight = 16;
 	BlockSize = 50.0f;
 }
